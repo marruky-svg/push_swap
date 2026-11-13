@@ -6,7 +6,7 @@
 /*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/08 16:27:00 by elsouza           #+#    #+#             */
-/*   Updated: 2026/11/09 11:11:46 by elsouza          ###   ########.fr       */
+/*   Updated: 2026/11/11 21:11:18 by elsouza          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 # include "libft/libft.h"
 
 typedef enum e_ops
@@ -33,6 +34,14 @@ typedef enum e_ops
 	OP_SIZE
 }	t_ops;
 
+typedef enum e_strat
+{
+	STRAT_ADAPTIVE,
+	STRAT_SIMPLE,
+	STRAT_MEDIUM,
+	STRAT_COMPLEX,
+}	t_strat;
+
 typedef struct s_node
 {
 	struct s_node	*next;
@@ -43,7 +52,7 @@ typedef struct s_node
 typedef struct s_stack
 {
 	t_node	*top;
-	int		size;
+	size_t	size;
 }	t_stack;
 
 typedef struct s_ctx
@@ -52,6 +61,12 @@ typedef struct s_ctx
 	t_stack	*b;
 	int		ops_count[OP_SIZE];
 }	t_ctx;
+
+typedef struct s_cfg
+{
+	t_strat	strat;
+	int		bench;
+}	t_cfg;
 
 void	swap(t_stack *stack);
 void	push(t_stack *src, t_stack *dst);
@@ -74,5 +89,8 @@ char	*op_name(t_ops op);
 void	record_op(t_ctx *ctx, t_ops op);
 
 double	disorder(t_stack *a);
+
+int		parse_flags(char **argv, t_cfg *cfg);
+int		parse_number(char *str, int *out);
 
 #endif

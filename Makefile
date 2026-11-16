@@ -1,5 +1,6 @@
 NAME		=	push_swap
-CC			=	cc 
+
+CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror
 
 LIBFT_DIR	=	libft
@@ -7,18 +8,20 @@ LIBFT		=	$(LIBFT_DIR)/libft.a
 
 INCLUDES	=	-I. -I$(LIBFT_DIR)
 
-SRCS	=	disorder.c \
-			dispatch.c \
-			main.c \
-			ops_rev_rotate.c \
-			ops_rotate.c \
-			ops_swap_push.c \
-			parse_args.c \
-			parse_flags.c \
-			primitives.c \
-			record.c
-		
-OBJS	=	$(SRCS:.c=.o)
+SRCS		=	disorder.c \
+				dispatch.c \
+				errors.c \
+				main.c \
+				ops_rev_rotate.c \
+				ops_rotate.c \
+				ops_swap_push.c \
+				parse_args.c \
+				parse_flags.c \
+				primitives.c \
+				record.c \
+				stack_utils.c
+
+OBJS		=	$(SRCS:.c=.o)
 
 all: $(NAME)
 

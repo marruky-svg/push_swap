@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
+/*   By: elsouza <elsouza@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/08 16:27:00 by elsouza           #+#    #+#             */
-/*   Updated: 2026/11/16 12:08:05 by elsouza          ###   ########.fr       */
+/*   Updated: 2026/11/16 18:44:28 by elsouza          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,12 @@ double	disorder(t_stack *a);
 
 int		parse_flags(char **argv, t_cfg *cfg);
 int		parse_number(char *str, int *out);
+int		parse_args(char **argv, int start, t_stack *a);
 
 t_node	*new_node(int value);
 int		add_bottom(t_stack *stack, int value);
 int		has_value(t_stack *stack, int value);
 void	free_stack(t_stack *stack);
 
-
+void	error_exit(t_ctx *ctx);
 #endif

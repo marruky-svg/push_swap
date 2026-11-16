@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
+/*   By: elsouza <elsouza@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/11 20:05:10 by elsouza           #+#    #+#             */
-/*   Updated: 2026/11/16 13:24:09 by elsouza          ###   ########.fr       */
+/*   Updated: 2026/11/16 17:58:13 by elsouza          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,24 @@ static void	free_split(char **word)
 	free(word);
 }
 
-static int	parse_args(char *arg, t_stack *a)
+static int	parse_arg(char *arg, t_stack *a)
 {
 	char	**words;
 	int		is_ok;
 	int		i;
+	int		n;
 
+	n = 0;
 	words = ft_split(arg, ' ');
 	if (!words)
 		return (0);
-	if (words[0])
-		is_ok = 1;
+	is_ok = (words[0] != NULL);
 	i = 0;
 	while (words[i] && is_ok)
-	{
-		
-	}
-	
+		is_ok = (parse_number(words[i++], &n) && !has_value(a, n)
+				&& add_bottom(a, n));
+	free_split(words);
+	return (is_ok);
 }
 
 int	parse_number(char *str, int *out)
@@ -80,5 +81,20 @@ int	parse_number(char *str, int *out)
 	if (str[i])
 		return (0);
 	*out = (int)(result * sign);
+	return (1);
+}
+
+int	parse_args(char **argv, int start, t_stack *a)
+{
+	int	i;
+	int	n;
+
+	i = start;
+	while (argv[i])
+	{
+		n = parse_arg(argv[i++], a);
+		if (!n)
+			return (0);
+	}
 	return (1);
 }

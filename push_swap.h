@@ -6,7 +6,7 @@
 /*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/08 16:27:00 by elsouza           #+#    #+#             */
-/*   Updated: 2026/11/11 21:11:18 by elsouza          ###   ########.fr       */
+/*   Updated: 2026/11/16 12:08:05 by elsouza          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_node
 typedef struct s_stack
 {
 	t_node	*top;
-	size_t	size;
+	int	size;
 }	t_stack;
 
 typedef struct s_ctx
@@ -92,5 +92,11 @@ double	disorder(t_stack *a);
 
 int		parse_flags(char **argv, t_cfg *cfg);
 int		parse_number(char *str, int *out);
+
+t_node	*new_node(int value);
+int		add_bottom(t_stack *stack, int value);
+int		has_value(t_stack *stack, int value);
+void	free_stack(t_stack *stack);
+
 
 #endif

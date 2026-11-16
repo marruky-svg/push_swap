@@ -6,7 +6,7 @@
 /*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/11 20:05:10 by elsouza           #+#    #+#             */
-/*   Updated: 2026/11/11 21:14:26 by elsouza          ###   ########.fr       */
+/*   Updated: 2026/11/16 13:24:09 by elsouza          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,35 @@ static int	read_sign(char *str, int *i)
 		(*i)++;
 	}
 	return (sign);
+}
+
+static void	free_split(char **word)
+{
+	int	i;
+
+	i = 0;
+	while (word[i])
+		free(word[i++]);
+	free(word);
+}
+
+static int	parse_args(char *arg, t_stack *a)
+{
+	char	**words;
+	int		is_ok;
+	int		i;
+
+	words = ft_split(arg, ' ');
+	if (!words)
+		return (0);
+	if (words[0])
+		is_ok = 1;
+	i = 0;
+	while (words[i] && is_ok)
+	{
+		
+	}
+	
 }
 
 int	parse_number(char *str, int *out)

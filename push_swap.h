@@ -42,6 +42,14 @@ typedef enum e_strat
 	STRAT_COMPLEX,
 }	t_strat;
 
+typedef enum e_algo
+{
+	ALGO_SMALL,
+	ALGO_TURK,
+	ALGO,CHUNKS,
+	ALGO_QUICK
+}	t_algo;
+
 typedef struct s_node
 {
 	struct s_node	*next;
@@ -100,4 +108,19 @@ int		has_value(t_stack *stack, int value);
 void	free_stack(t_stack *stack);
 
 void	error_exit(t_ctx *ctx);
+
+int		find_min_pos(t_stack *stack);
+void	bring_to_top(t_ctx *ctx, int pos);
+void	sort_two(t_ctx *ctx);
+void	sort_three(t_ctx *ctx);
+void	sort_small(t_ctx *ctx);
+
+void	dispatch(t_ctx *ctx, t_cfg *cfg);
+
+void	sort_small(t_ctx *ctx);
+void	sort_turk(t_ctx *ctx);
+void	sort_chunks(t_ctx *ctx);
+void	sort_quick(t_ctx *ctx);
+
+void	print_bench(t_ctx *ctx, t_cfg *cfg, double disorder);
 #endif

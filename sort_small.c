@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-int	find_min_pos(t_stack *stack)
+static int	find_min_pos(t_stack *stack)
 {
 	t_node	*node;
 	int		min_val;
@@ -38,13 +38,13 @@ int	find_min_pos(t_stack *stack)
 	return (min_pos);
 }
 
-void	sort_two(t_ctx *ctx)
+static void	sort_two(t_ctx *ctx)
 {
 	if (ctx->a->top->content > ctx->a->top->next->content)
 		sa(ctx);
 }
 
-void	sort_three(t_ctx *ctx)
+static void	sort_three(t_ctx *ctx)
 {
 	t_stack	*a;
 
@@ -57,7 +57,7 @@ void	sort_three(t_ctx *ctx)
 		sa(ctx);
 }
 
-void	bring_to_top(t_ctx *ctx, int pos)
+static void	bring_to_top(t_ctx *ctx, int pos)
 {
 	int	i;
 

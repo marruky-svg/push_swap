@@ -20,6 +20,7 @@ t_node	*new_node(int value)
 	if (!node)
 		return (NULL);
 	node->content = value;
+	node->rank = 0;
 	node->next = node;
 	node->previous = node;
 	return (node);
@@ -83,4 +84,32 @@ void	free_stack(t_stack *stack)
 	}
 	stack->top = NULL;
 	stack->size = 0;
+}
+
+void	assign_ranks(t_stack *stack)
+{
+	t_node	*current;
+	t_node	*next;
+	int		i;
+	int		rank;
+	int		j;
+
+	current = stack->top;
+	i = 0;
+	while (i < stack->size)
+	{
+		rank = 0;
+		j = 0;
+		next = current->next;
+		while (j < stack->size - 1)
+		{
+			if (next->content < current->content)
+				rank++;
+			next = next->next;
+			j++;
+		}
+		current->rank = rank;
+		current = current->next;
+		i++;
+	}
 }

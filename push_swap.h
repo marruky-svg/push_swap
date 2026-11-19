@@ -50,17 +50,26 @@ typedef enum e_algo
 	ALGO_QUICK
 }	t_algo;
 
+typedef enum e_loc
+{
+	TOP_A,
+	BOT_A,
+	TOP_B,
+	BOT_B
+}	t_loc;
+
 typedef struct s_node
 {
 	struct s_node	*next;
-	int				content;
 	struct s_node	*previous;
+	int				content;
+	int				rank;
 }	t_node;
 
 typedef struct s_stack
 {
 	t_node	*top;
-	int	size;
+	int		size;
 }	t_stack;
 
 typedef struct s_ctx
@@ -106,6 +115,7 @@ t_node	*new_node(int value);
 int		add_bottom(t_stack *stack, int value);
 int		has_value(t_stack *stack, int value);
 void	free_stack(t_stack *stack);
+void	assign_ranks(t_stack *stack);
 
 void	error_exit(t_ctx *ctx);
 
@@ -117,4 +127,13 @@ void	sort_quick(t_ctx *ctx);
 void	sort_small(t_ctx *ctx);
 
 void	print_bench(t_ctx *ctx, t_cfg *cfg, double disorder);
+
+int		local_rank(t_ctx *ctx, t_loc local);
+void	move(t_ctx *ctx, t_loc src, t_loc dst);
+
+t_loc	dest_high(t_loc loc);
+t_loc	dest_mid(t_loc loc);
+t_loc	dest_low(t_loc);
+t_loc	normalize_loc(t_ctx *ctx, t_loc loc, int k);
+
 #endif

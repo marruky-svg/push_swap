@@ -3,41 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
+/*   By: gbaccell <gbaccell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/24 16:21:19 by elsouza           #+#    #+#             */
-/*   Updated: 2026/10/11 09:25:30 by elsouza          ###   ########.fr       */
+/*   Created: 2026/11/03 13:52:33 by gbaccell          #+#    #+#             */
+/*   Updated: 2026/11/05 19:29:21 by gbaccell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	is_sep(int c)
-{
-	return (c == ' ' || (c >= 9 && c <= 13));
-}
-
 int	ft_atoi(const char *nptr)
 {
-	size_t	i;
-	int		neg;
-	int		val;
+	int		i;
+	int		signal;
+	long	num;
 
 	i = 0;
-	while (nptr[i] && is_sep(nptr[i]))
+	while (nptr[i] == ' ' || (nptr[i] >= '\t' && nptr[i] <= '\r'))
 		i++;
-	neg = 1;
-	if (nptr[i] == '-' || nptr[i] == '+')
+	signal = 0;
+	if (nptr[i] == '+' || nptr[i] == '-')
 	{
 		if (nptr[i] == '-')
-			neg *= -1;
+			signal = -1;
 		i++;
 	}
-	val = 0;
+	num = 0;
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
-		val = val * 10 + (nptr[i] - '0');
+		num = num * 10 + (nptr[i] - '0');
 		i++;
 	}
-	return (val * neg);
+	if (signal == -1)
+		num = -num;
+	return (num);
 }

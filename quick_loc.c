@@ -6,12 +6,18 @@
 /*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/19 06:18:54 by elsouza           #+#    #+#             */
-/*   Updated: 2026/11/19 07:08:06 by elsouza          ###   ########.fr       */
+/*   Updated: 2026/11/20 10:30:00 by elsouza          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+/*================ MOVER UM ELEMENTO ENTRE AS QUATRO PONTAS =================*/
+
+/*
+** to_top: se o elemento esta num fundo, traz ao topo da sua pilha
+** (rra ou rrb) e devolve o topo onde ficou.
+*/
 static t_loc	to_top(t_ctx *ctx, t_loc src)
 {
 	if (src == BOT_A)
@@ -27,6 +33,10 @@ static t_loc	to_top(t_ctx *ctx, t_loc src)
 	return (src);
 }
 
+/*
+** from_top: leva o elemento do topo de a ou de b para dst.
+** Outra pilha -> push; destino no fundo -> rotacao depois.
+*/
 static void	from_top(t_ctx *ctx, t_loc top, t_loc dst)
 {
 	if (top == TOP_A)
@@ -55,6 +65,9 @@ static void	from_top(t_ctx *ctx, t_loc top, t_loc dst)
 	}
 }
 
+/*
+** move: origem -> destino em dois passos (1 a 3 operacoes).
+*/
 void	move(t_ctx *ctx, t_loc src, t_loc dst)
 {
 	t_loc	top;
@@ -65,13 +78,16 @@ void	move(t_ctx *ctx, t_loc src, t_loc dst)
 	from_top(ctx, top, dst);
 }
 
+/*
+** local_rank: valor (ja normalizado, 0..n-1) do elemento na ponta loc.
+*/
 int	local_rank(t_ctx *ctx, t_loc loc)
 {
 	if (loc == TOP_A)
-		return (ctx->a->top->rank);
+		return (ctx->a->top->content);
 	if (loc == BOT_A)
-		return (ctx->a->top->previous->rank);
+		return (ctx->a->top->previous->content);
 	if (loc == TOP_B)
-		return (ctx->b->top->rank);
-	return (ctx->b->top->previous->rank);
+		return (ctx->b->top->content);
+	return (ctx->b->top->previous->content);
 }

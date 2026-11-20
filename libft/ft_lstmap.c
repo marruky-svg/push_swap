@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
+/*   By: gbaccell <gbaccell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 13:25:18 by elsouza           #+#    #+#             */
-/*   Updated: 2026/11/04 19:57:48 by elsouza          ###   ########.fr       */
+/*   Created: 2026/11/03 13:54:52 by gbaccell          #+#    #+#             */
+/*   Updated: 2026/11/05 19:30:56 by gbaccell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*new_lst;
-	t_list	*node;
-	void	*content;
+	t_list	*new_list;
+	t_list	*new_node;
+	void	*new_content;
 
-	if (!lst || !f || !del)
+	if (lst == NULL || f == NULL || del == NULL)
 		return (NULL);
-	new_lst = NULL;
+	new_list = NULL;
 	while (lst)
 	{
-		content = f(lst->content);
-		node = ft_lstnew(content);
-		if (!node)
+		new_content = f(lst->content);
+		new_node = ft_lstnew(new_content);
+		if (new_node == NULL)
 		{
-			del(content);
-			ft_lstclear(&new_lst, del);
+			del(new_content);
+			ft_lstclear(&new_list, del);
 			return (NULL);
 		}
-		ft_lstadd_back(&new_lst, node);
+		ft_lstadd_back(&new_list, new_node);
 		lst = lst->next;
 	}
-	return (new_lst);
+	return (new_list);
 }

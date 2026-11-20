@@ -3,79 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
+/*   By: gbaccell <gbaccell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/25 16:06:29 by elsouza           #+#    #+#             */
-/*   Updated: 2026/08/27 01:00:12 by elsouza          ###   ########.fr       */
+/*   Created: 2026/11/03 13:57:02 by gbaccell          #+#    #+#             */
+/*   Updated: 2026/11/05 19:31:56 by gbaccell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count_words(char const *s, char c)
+static size_t	count_words(char const *s, char c)
 {
-	int		words;
+	size_t	count;
 	size_t	i;
 
+	count = 0;
 	i = 0;
-	words = 0;
 	while (s[i])
 	{
-		while (s[i] && s[i] == c)
-			i++;
-		if (s[i] && !(s[i] == c))
-		{
-			words++;
-			while (s[i] && !(s[i] == c))
-				i++;
-		}
+		if (s[i] != c && (i == 0 || s[i - 1] == c))
+			count++;
+		i++;
 	}
-	return (words);
+	return (count);
 }
 
-static char	**free_memory(char **arr, size_t len)
+static char	**free_all(char **arr, size_t n)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < len)
-		free(arr[i++]);
+	while (n > 0)
+	{
+		n--;
+		free(arr[n]);
+	}
 	free(arr);
 	return (NULL);
 }
 
-static int	fill_word(char **arr, char const *s, size_t *i, char c)
+static char	**fill_words(char **arr, char const *s, char c)
 {
-	unsigned int	start;
+	size_t	i;
+	size_t	w;
+	size_t	start;
 
-	start = (unsigned int)*i;
-	while (s[*i] && s[*i] != c)
-		(*i)++;
-	*arr = ft_substr(s, start, *i - start);
-	return ((*arr != NULL));
+	i = 0;
+	w = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			i++;
+		else
+		{
+			start = i;
+			while (s[i] && s[i] != c)
+				i++;
+			arr[w] = ft_substr(s, start, i - start);
+			if (arr[w] == NULL)
+				return (free_all(arr, w));
+			w++;
+		}
+	}
+	arr[w] = NULL;
+	return (arr);
 }
 
 char	**ft_split(char const *s, char c)
 {
 	char	**arr;
-	size_t	i;
-	size_t	j;
 
 	arr = malloc(sizeof(char *) * (count_words(s, c) + 1));
-	if (!arr)
+	if (arr == NULL)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		while (s[i] && s[i] == c)
-			i++;
-		if (!s[i])
-			break ;
-		if (!fill_word(&arr[j], s, &i, c))
-			return (free_memory(arr, j));
-		j++;
-	}
-	arr[j] = NULL;
-	return (arr);
+	return (fill_words(arr, s, c));
 }

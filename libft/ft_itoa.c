@@ -3,53 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
+/*   By: gbaccell <gbaccell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/25 16:50:29 by elsouza           #+#    #+#             */
-/*   Updated: 2026/08/27 01:18:31 by elsouza          ###   ########.fr       */
+/*   Created: 2026/11/03 13:54:15 by gbaccell          #+#    #+#             */
+/*   Updated: 2026/11/05 19:30:12 by gbaccell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	number_digits(long nbr)
+static size_t	count_len(long n)
 {
-	int	len;
+	size_t	len;
 
 	len = 0;
-	if (nbr <= 0)
+	if (n <= 0)
 		len = 1;
-	while (nbr)
+	while (n != 0)
 	{
-		nbr /= 10;
+		n = n / 10;
 		len++;
 	}
 	return (len);
 }
 
-char	*ft_itoa(int nbr)
+char	*ft_itoa(int n)
 {
 	char	*str;
 	long	nb;
-	int		len;
+	size_t	len;
 
-	nb = nbr;
-	len = number_digits(nb);
-	str = malloc(sizeof(char) * (len + 1));
-	if (!str)
+	nb = n;
+	len = count_len(nb);
+	str = malloc(len + 1);
+	if (str == NULL)
 		return (NULL);
 	str[len] = '\0';
+	if (nb == 0)
+		str[0] = '0';
 	if (nb < 0)
 	{
 		str[0] = '-';
 		nb = -nb;
 	}
-	if (nb == 0)
-		str[0] = '0';
 	while (nb > 0)
 	{
-		str[--len] = (nb % 10) + '0';
-		nb /= 10;
+		len--;
+		str[len] = (nb % 10) + '0';
+		nb = nb / 10;
 	}
 	return (str);
 }

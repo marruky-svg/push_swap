@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
+/*   By: gbaccell <gbaccell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/23 18:12:24 by elsouza           #+#    #+#             */
-/*   Updated: 2026/08/27 00:30:52 by elsouza          ###   ########.fr       */
+/*   Created: 2026/11/03 13:54:10 by gbaccell          #+#    #+#             */
+/*   Updated: 2026/11/05 19:30:06 by gbaccell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 int	ft_isprint(int c)
 {
-	return (c >= 32 && c < 127);
+	if (c >= ' ' && c <= '~')
+		return (1);
+	return (0);
 }

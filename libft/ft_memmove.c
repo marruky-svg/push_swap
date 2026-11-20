@@ -3,48 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
+/*   By: gbaccell <gbaccell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/23 21:01:21 by elsouza           #+#    #+#             */
-/*   Updated: 2026/11/04 20:02:57 by elsouza          ###   ########.fr       */
+/*   Created: 2026/11/03 13:56:33 by gbaccell          #+#    #+#             */
+/*   Updated: 2026/11/05 19:31:25 by gbaccell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t n)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
 	size_t				i;
+	unsigned char		*dest_ptr;
+	const unsigned char	*src_ptr;
 
-	if (!dst && !src)
-		return (NULL);
-	d = (unsigned char *)dst;
-	s = (const unsigned char *)src;
-	if (d > s)
-	{
-		while (n-- > 0)
-			d[n] = s[n];
-	}
+	if (!dest && !src)
+		return (dest);
+	dest_ptr = (unsigned char *)dest;
+	src_ptr = (const unsigned char *)src;
+	if (dest == src)
+		return (dest);
+	if (dest_ptr < src_ptr)
+		ft_memcpy(dest, src, n);
 	else
 	{
-		i = 0;
-		while (i < n)
+		i = n;
+		while (i > 0)
 		{
-			d[i] = s[i];
-			i++;
+			i--;
+			dest_ptr[i] = src_ptr[i];
 		}
 	}
-	return (dst);
+	return (dest);
 }
-
-/*
-#include <stdio.h>
-int main()
-{
-	char data1[] = "abcdefghi";
-	ft_memmove(data1 + 2, data1, 4);
-	printf("%s", data1);
-}
-*/

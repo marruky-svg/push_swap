@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
+/*   By: gbaccell <gbaccell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/26 01:55:22 by elsouza           #+#    #+#             */
-/*   Updated: 2026/08/27 01:16:39 by elsouza          ###   ########.fr       */
+/*   Created: 2026/11/03 13:54:57 by gbaccell          #+#    #+#             */
+/*   Updated: 2026/11/05 19:31:01 by gbaccell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_list	*ft_lstnew(void *content)
 	t_list	*node;
 
 	node = malloc(sizeof(t_list));
-	if (!node)
+	if (node == NULL)
 		return (NULL);
 	node->content = content;
 	node->next = NULL;

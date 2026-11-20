@@ -3,93 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   sort_small.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elsouza <elsouza@student.42.fr>              +#+  +:+       +#+      */
+/*   By: gbaccell <gbaccell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/11/17 11:11:10 by marvin            #+#    #+#             */
-/*   Updated: 2026/11/17 11:11:10 by marvin           ###   ########.fr       */
+/*   Created: 2026/11/17 15:00:00 by gbaccell          #+#    #+#             */
+/*   Updated: 2026/11/18 14:42:58 by gbaccell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	find_min_pos(t_stack *stack)
-{
-	t_node	*node;
-	int		min_val;
-	int		min_pos;
-	int		i;
+/*===================== CASOS PEQUENOS (2 a 5 elementos) =====================*/
 
-	if (!stack || !stack->top || stack->size <= 0)
-		return (-1);
-	node = stack->top;
-	min_val = node->content;
-	min_pos = 0;
-	i = 0;
-	while (i < stack->size)
-	{
-		if (node->content < min_val)
-		{
-			min_val = node->content;
-			min_pos = i;
-		}
-		node = node->next;
-		i++;
-	}
-	return (min_pos);
-}
+/*
+** Notacao: [x y z] = topo, segundo, terceiro (valores ja normalizados).
+*/
 
-static void	sort_two(t_ctx *ctx)
+/*
+** sort_two: se o topo > segundo -> sa. (no maximo 1 operacao)
+*/
+void	sort_two(t_ctx *ctx)
 {
 	if (ctx->a->top->content > ctx->a->top->next->content)
 		sa(ctx);
 }
 
-static void	sort_three(t_ctx *ctx)
+/*
+** sort_three: ordena 3 elementos com no maximo 2 operacoes.
+**   1. se o MAIOR esta no topo    -> ra
+**      se o MAIOR esta no meio    -> rra
+**      (agora o maior esta no fundo)
+**   2. se topo > segundo          -> sa
+** Os 6 casos possiveis:
+**   [0 1 2] nada    [0 2 1] rra sa   [1 0 2] sa
+**   [1 2 0] rra     [2 0 1] ra       [2 1 0] ra sa
+*/
+void	sort_three(t_ctx *ctx)
 {
-	t_stack	*a;
+	int	max;
 
-	a = ctx->a;
-	if (a->top->content > a->top->next->content && a->top->content > a->top->previous->content)
+	max = find_max_pos(ctx->a);
+	if (max == 0)
 		ra(ctx);
-	else if (a->top->next->content > a->top->previous->content && a->top->next->content > a->top->content)
+	else if (max == 1)
 		rra(ctx);
-	if (a->top->content > a->top->next->content)
+	if (ctx->a->top->content > ctx->a->top->next->content)
 		sa(ctx);
 }
 
-static void	bring_to_top(t_ctx *ctx, int pos)
+/*
+** sort_five: ordena 4 ou 5 elementos.
+**   1. enquanto a->size > 3:
+**        bring_to_top_a(ctx, find_min_pos(ctx->a)); pb(ctx);
+**   2. sort_three(ctx);
+**   3. enquanto b nao estiver vazia -> pa(ctx);
+** Como os menores foram para b em ordem, voltam na ordem certa.
+*/
+void	sort_five(t_ctx *ctx)
 {
-	int	i;
-
-	i = 0;
-	if (pos <= ctx->a->size / 2)
+	while (ctx->a->size > 3)
 	{
-		while (i++ < pos)
-			ra(ctx);
-	}
-	else
-	{
-		while (i++ < ctx->a->size - pos)
-			rra(ctx);
-	}
-}
-
-void	sort_small(t_ctx *ctx)
-{
-	t_stack	*a;
-	int		min_pos;
-	
-	a = ctx->a;
-	while (a->size > 3)
-	{
-		min_pos = find_min_pos(a);
-		bring_to_top(ctx, min_pos);
+		bring_to_top_a(ctx, find_min_pos(ctx->a));
 		pb(ctx);
 	}
-	if (a->size == 2)
-		sort_two(ctx);
-	else
-		sort_three(ctx);
-	while (ctx->b->size)
+	sort_three(ctx);
+	while (ctx->b->size > 0)
 		pa(ctx);
+}
+
+/*
+** sort_small: escolhe pelo tamanho:
+**   size 2 -> sort_two | size 3 -> sort_three | size 4 ou 5 -> sort_five
+*/
+void	sort_small(t_ctx *ctx)
+{
+	if (ctx->a->size == 2)
+		sort_two(ctx);
+	else if (ctx->a->size == 3)
+		sort_three(ctx);
+	else
+		sort_five(ctx);
 }

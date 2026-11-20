@@ -12,6 +12,16 @@
 
 #include "push_swap.h"
 
+/*
+** count_mistake: laco INTERNO do pseudocodigo do subject.
+** Recebe o no da posicao i e compara com todos os nos seguintes
+** (posicoes j = i + 1 ate size - 1):
+**   - n  -> no fixo (a[i])
+**   - nt -> no que avanca (a[j])
+** Cada par visitado soma 1 em total_pairs; cada par onde
+** a[i] > a[j] (par invertido) conta como um erro (mistake).
+** Retorna o numero de erros encontrados para esse i.
+*/
 static int	count_mistake(t_node *node, double *total_pairs,
 	int start, int size)
 {
@@ -33,6 +43,17 @@ static int	count_mistake(t_node *node, double *total_pairs,
 	return (mistake);
 }
 
+/*
+** disorder: calcula o quanto a pilha a esta fora de ordem.
+** Retorna um valor entre 0 e 1:
+**   0   -> ja ordenada
+**   1   -> totalmente invertida
+**   0.x -> parcialmente ordenada
+** Formula: pares_invertidos / total_de_pares.
+** Laco EXTERNO: percorre i de 0 ate size - 2 e chama count_mistake.
+** Pilha com menos de 2 elementos e considerada ordenada (0).
+** IMPORTANTE: deve ser chamada ANTES de qualquer movimento.
+*/
 double	disorder(t_stack *a)
 {
 	double		mistakes;

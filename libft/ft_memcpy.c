@@ -3,43 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elsouza <elsouza@student.42porto.com>      +#+  +:+       +#+        */
+/*   By: gbaccell <gbaccell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/23 20:35:29 by elsouza           #+#    #+#             */
-/*   Updated: 2026/10/30 01:01:42 by elsouza          ###   ########.fr       */
+/*   Created: 2026/11/03 13:56:17 by gbaccell          #+#    #+#             */
+/*   Updated: 2026/11/05 19:31:21 by gbaccell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
-	size_t				size;
+	const unsigned char		*src_ptr;
+	unsigned char			*dest_ptr;
+	size_t					i;
 
-	if (!n)
-		return (dst);
-	if (!dst && !src)
-		return (NULL);
-	size = 0;
-	d = (unsigned char *)dst;
-	s = (const unsigned char *)src;
-	while (size < n)
+	if (!dest && !src)
+		return (dest);
+	i = 0;
+	dest_ptr = (unsigned char *)dest;
+	src_ptr = (const unsigned char *)src;
+	while (i < n)
 	{
-		d[size] = s[size];
-		size++;
+		dest_ptr[i] = src_ptr[i];
+		i++;
 	}
-	return (dst);
+	return (dest);
 }
-
-/*
-#include "stdio.h"
-int main()
-{
-	char dst[] = "efnaopfgneiobg.   ianegnag";
-	const char *src = "elder corre";
-	ft_memcpy(dst, src, 5);
-	printf("%s", dst);
-}
-*/
